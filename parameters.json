@@ -1,0 +1,5 @@
+{
+  "filepath": "./files/movies.csv",
+  "provider": "imdb",
+  "src_bucket": "development-test-levis-external"
+}
