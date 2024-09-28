@@ -1,5 +1,8 @@
 {
   "filepath": "./files/movies.csv",
   "provider": "imdb",
-  "src_bucket": "development-test-levis-external"
+  "business": "movies",
+  "external_bucket": "development-test-levis-external",
+  "stage_bucket": "development-test-levis-stage",
+  "lambda_name": "lambdastartecstask"
 }
