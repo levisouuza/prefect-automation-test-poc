@@ -2,5 +2,7 @@
   "filepath": "./files/movies.csv",
   "provider": "imdb",
   "business": "movies",
-  "src_bucket": "development-test-levis-external"
+  "external_bucket": "development-test-levis-external",
+  "stage_bucket": "development-test-levis-stage",
+  "lambda_name": "lambdastartecstask"
 }
