@@ -1,6 +1,6 @@
+from time import sleep
 from model.config import Config
 from model.parameters import Parameters
-from utils.date_utils import get_current_date_yyyymmdd
 from service.aws_service import AwsService
 from botocore.client import ClientError
 
@@ -15,29 +15,29 @@ class S3Service:
         try:
             self._client.upload_file(
                 local_filename,
-                self._params.src_bucket,
+                self._params.external_bucket,
                 name_object_s3
             )
 
         except ClientError as err:
-            print(f"Error while upload file: {local_filename} -> {str(err)}")
+            raise Exception(f"Error while upload file: {local_filename} -> {str(err)}")
 
+    def check_existence_file_s3(self, bucket: str, key: str):
+        counter = 1
+        while counter <= 5:
+            try:
+                return self._get_object_in_bucket(bucket, key)
 
-    def check_file_s3(self, filepath: str):
-        pass
+            except Exception as err:
+                print(f"File not found. Key: {key}. Error: {err}")
+                print(f"Current Counter: {counter}. Add one more")
+                counter += 1
+                sleep(10)
 
+        raise Exception("Error in transfer file.")
 
-
-# _CONFIG = Config(
-#     aws_access_key_id="AKIAZINR3TSSEAAAB56C",
-#     aws_secret_access_key="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",
-# )
-#
-# _PARAMS = Parameters(
-#     src_bucket="development-test-levis-external"
-# )
-#
-# _s3_service = S3Service(_CONFIG, _PARAMS)
-#
-# current_date = get_current_date_yyyymmdd()
-# _s3_service.upload_file_s3("../movies.csv", f"business/imdb/{current_date}/movies.csv")
+    def _get_object_in_bucket(self, bucket: str, key: str):
+        resp = self._client.get_object(
+            Bucket=bucket, Key=key
+        )
+        return resp.get("ResponseMetadata").get("HTTPStatusCode")
