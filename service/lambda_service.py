@@ -11,12 +11,12 @@ class LambdaService:
         self._client = AwsService.get_client(config, "lambda")
         self._params = params
 
-    def invoke_function(self, payload: dict):
+    def invoke_function(self, lambda_name: str,payload: dict):
 
         payload_to_bytes = json.dumps(payload).encode('utf-8')
         try:
             response = self._client.invoke(
-                FunctionName=self._params.lambda_name,
+                FunctionName=lambda_name,
                 InvocationType='Event',
                 Payload=payload_to_bytes
             )
