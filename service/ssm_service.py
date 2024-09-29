@@ -14,6 +14,7 @@ class SsmService:
             self._client.delete_parameter(
                 Name=f"{self._build_path_params_name()}/_test"
             )
+            return 200
         except ClientError as err:
             raise Exception(f"Delete Parameter test Failed: {str(err)}")
 
@@ -43,19 +44,3 @@ class SsmService:
 
     def _build_path_params_name(self):
         return f"/stage/{self._params.provider}/{self._params.business}"
-
-#
-# _CONFIG = Config(
-#     aws_access_key_id="AKIAZINR3TSSEAAAB56C",
-#     aws_secret_access_key="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",
-# )
-#
-# _PARAMS = Parameters(
-#     external_bucket="development-test-levis-external",
-#     provider="imdb",
-#     business="movies"
-# )
-#
-# _ssm_service = SsmService(_CONFIG, _PARAMS)
-# params_value = _ssm_service.get_parameter()
-# print(params_value)
