@@ -22,9 +22,9 @@ class S3Service:
         except ClientError as err:
             raise Exception(f"Error while upload file: {local_filename} -> {str(err)}")
 
-    def check_existence_file_s3(self, bucket: str, key: str, time: int):
+    def check_existence_file_s3(self, bucket: str, key: str, time: int, retries: int = 5):
         counter = 1
-        while counter <= 5:
+        while counter <= retries:
             try:
                 return self._get_object_in_bucket(bucket, key)
 
@@ -34,12 +34,10 @@ class S3Service:
                 counter += 1
                 sleep(time)
 
-        raise Exception("Error in transfer file.")
+        raise Exception(f"File not found after {retries} retries of {time}s")
 
     def _get_object_in_bucket(self, bucket: str, key: str):
         resp = self._client.get_object(
             Bucket=bucket, Key=key
         )
         return resp.get("ResponseMetadata").get("HTTPStatusCode")
-
-
