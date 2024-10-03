@@ -19,8 +19,8 @@ class IngestionTestProcessor:
     def __init__(self, config: Config, params: Parameters):
         self._config = config
         self._params = params
-        self._filename_s3 = self._build_filename_s3()
         self._current_date = get_current_date_yyyymmdd()
+        self._filename_s3 = self._build_filename_s3()
 
         self._s3_service = S3Service(self._config, self._params)
         self._ssm_service = SsmService(self._config, self._params)
@@ -129,9 +129,7 @@ class IngestionTestProcessor:
         return status_code
 
     @task(name="execute_lambda_start_job")
-    def _execute_lambda_start_job(
-            self, _result_before_task1, _result_before_task2
-    ):
+    def _execute_lambda_start_job(self, _result_before_task):
         status_code = self._lambda_service.invoke_function(
             self._params.lambda_name_start_job, EVENT_LAMBDA
         )
@@ -146,7 +144,7 @@ class IngestionTestProcessor:
     @task(name="validate_existence_file_bucket_sor")
     def _validate_existence_file_bucket_sor(self, _result_before_task):
         status_code = self._s3_service.check_existence_file_s3(
-            self._params.bucket_sor, self._filename_s3, CHECK_TIME_BUCKET_SOR
+            self._params.bucket_sor, self._build_filename_sor_s3(), CHECK_TIME_BUCKET_SOR
         )
         return status_code
 
@@ -190,5 +188,4 @@ class IngestionTestProcessor:
                 f"where anomesdia= {self._current_date} limit 5;")
 
     def _build_filename_sor_s3(self):
-        return (f"{self._params.bucket_sor}/{self._params.table_name}/"
-                f"anomesdia={self._current_date}/")
+        return f"{self._params.table_name}/anomesdia={self._current_date}/"
