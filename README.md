@@ -47,7 +47,7 @@ Em seguida, já é possível iniciar o servidor local diretamente no terminal:
 prefect server start
 ```
 
-## Conceitos Básicos
+## Basic Concepts
 
 Existem dois conceitos principais que precisamos entender para trabalhar com o Prefect: **Task** e **Flow**.
 
@@ -71,7 +71,7 @@ Existem dois conceitos principais que precisamos entender para trabalhar com o P
         print("Executando o fluxo")
     ```
 
-## Visão Geral da UI
+## UI OverView
 
 Conforme mencionado, o Prefect possui uma interface extremamente amigável. No menu lateral, há diversas opções que auxiliam nas atividades do dia a dia.
 
@@ -87,7 +87,7 @@ Também é possível visualizar os logs detalhados durante o processo, facilitan
 
 ![LogsUI.png](img/LogsUI.png)
 
-## Caso de Uso - POC
+## Use Case - POC
 
 O script criado simula o pipeline de produção, com algumas diferenças, incluindo etapas adicionais para validar outros cenários de uso da ferramenta.
 
