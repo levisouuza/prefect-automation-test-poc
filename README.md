@@ -1,5 +1,5 @@
 # prefect-automation-test-poc
-Este repositório apresenta uma solução para automação de testes de pipelines de ingestão de dados.
+Este repositório apresenta uma solução para automação de testes de pipelines de ingestão de dados envolvendo a ferramenta Prefect e AWS.
 
 ## Briefing
 
