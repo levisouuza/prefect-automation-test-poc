@@ -1,5 +1,12 @@
 {
   "filepath": "./files/movies.csv",
   "provider": "imdb",
-  "src_bucket": "development-test-levis-external"
+  "business": "movies",
+  "table_name": "movies_table",
+  "bucket_external": "development-test-levis-external",
+  "bucket_stage": "development-test-levis-stage",
+  "bucket_sor": "development-test-levis-sor",
+  "lambda_name_start_task": "lambdastartecstask",
+  "lambda_name_start_job": "lambdastartjob",
+  "database_sor": "database_sor"
 }
